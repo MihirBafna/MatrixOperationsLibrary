@@ -1,4 +1,4 @@
-# MatrixCalculator
+# MatrixLibrary
 Python Module that contains functions for matrix operations and theoretical interpretations in Linear Algebra (ranging from basic matrix algebra to determinants, vector spaces, and eigenvalues/vectors)
 
 # Usage
