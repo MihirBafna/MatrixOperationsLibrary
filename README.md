@@ -9,9 +9,9 @@ import MatrixOperations as mo
 # Module Functions
 Here is the list of functions that the module currently contains:
 
-| Command | Description |
+| Function | Description |
 | --- | --- |
-| getMatrix | reads matrix in from file and returns it as a 2D array |
+| loadMatrix | reads matrix in from file and returns it as a 2D array |
 | numCols | returns the number of columns for a specified matrix |
 | numRows | returns the number of rows for a specified matrix |
 | transpose | returns a matrix with the rows and columns swapped |
