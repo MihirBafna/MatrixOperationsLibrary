@@ -28,7 +28,7 @@ Here is the list of functions that the module currently contains:
 | pivot | returns the index of the first pivot position |
 | echelon | row reduces a given matrix to echelon form (upper triangular form) |
 | reducedEchelon | row reduces a given matrix to reduced echelon form (RREF) |
-| augment | combines a matrix and a vector into an augmented matrix |
+| augment | combines a coeffecient matrix and an answer vector into an augmented matrix |
 | submatrix | given an n * n matrix and a row and column index, returns a submatrix disregarding specified row/column |
 | solve | solves the equation Ax = b for the x vector, where A is a given coeffecient matrix and b is a given answer vector |
 | determinant | finds the determinant of a given matrix |
