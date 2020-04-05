@@ -100,27 +100,31 @@ def dot(vector1,vector2):
         for i in range(numCols(vector1)):
             ans+=vector1[0][i]*vector2[i][0]
     else:
-        return "ERROR: must use a vector (single column matrix) to use the dot() function"
+        return "ERROR: must use a vector (single column/row matrix) to use the dot() function"
     return ans
 
-# def cross(vector1,vector2):
-#     rows1 = numRows(vector1)
-#     rows2 = numRows(vector2)
-#     cols1 = numCols(vector1)
-#     cols2 = numCols(vector2)
-#     ans = np.zeros(shape=(1, 3))
-#     if(cols1 == 1):
-#         vector1 = transpose(vector1)
-#     if(rows2==1):
-#         vector2 = transpose(vector2)
-#     if(numCols(vector1)!=numRows(vector2)):
-#         return "ERROR: vectors must be in the same dimension (same # of entries)"
-#     if(isVector(vector1) and isVector(vector2)):
-#         for i in range(numCols(vector1)):
-#             ans += vector1[0][i]*vector2[i][0]
-#     else:
-#         return "ERROR: must use a vector (single column matrix) for the cross() function"
-#     return ans
+def cross(vector1,vector2):
+    rows1 = numRows(vector1)
+    rows2 = numRows(vector2)
+    cols1 = numCols(vector1)
+    cols2 = numCols(vector2)
+    ans = np.zeros(shape=(3, 1))
+    if(cols1 == 1):
+        vector1 = transpose(vector1)
+    if(rows2==1):
+        vector2 = transpose(vector2)
+    if(numCols(vector1)!= 3 or numRows(vector2)!=3):
+        return "ERROR: cross product is defined as an operation in three dimensional space, therefore the vectors must have three entries each"
+    if(isVector(vector1) and isVector(vector2)):
+        print(ans)
+        print(vector1)
+        print(vector2)
+        ans[0][0] = vector1[0][1]*vector2[2][0]-vector1[0][2]*vector2[1][0]
+        ans[1][0] = vector1[0][2]*vector2[0][0]-vector1[0][0]*vector2[2][0]
+        ans[2][0] = vector1[0][0]*vector2[1][0]-vector1[0][1]*vector2[0][0]
+    else:
+        return "ERROR: must use a 3D vector (single column/row matrix with three entries) for the cross() function"
+    return ans
 
 def multiply(mat1,mat2):
     rows1 = numRows(mat1)
