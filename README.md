@@ -1,12 +1,17 @@
 # MatrixOperationsLibrary
+
 Python Module that contains functions for matrix operations and theoretical interpretations in Linear Algebra (ranging from basic matrix algebra to determinants, vector spaces, and eigenvalues/vectors)
 
-# Usage
+## Usage
+
 move the module MatrixOperations.py into your working directory and import it into the file of your choosing
-```
+
+```python
 import MatrixOperations as mo
 ```
-# Module Functions
+
+## Module Functions
+
 Here is the list of functions that the module currently contains:
 
 | Function | Description |
