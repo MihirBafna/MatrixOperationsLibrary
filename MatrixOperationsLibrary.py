@@ -2,12 +2,12 @@ import numpy as np
 
 def loadMatrix(filename):
     file = open(filename, 'r')
-    lines = file.readlines()
-    rows = len(lines)
-    cols = len(lines[0].split())
+    linelist = file.readlines()
+    rows = len(linelist)
+    cols = len(linelist[0].split())
     matrix = np.zeros(shape=(rows, cols))
     for i in range(rows):
-        line = lines[i].split()
+        line = linelist[i].split()
         for j in range(cols):
             matrix[i][j] = line[j]
     print("matrix loaded ...")
@@ -194,14 +194,20 @@ def echelon(matrix):
     return mat
 
 
-# def reducedEchelon(matrix):
-#     rows = numRows(matrix)
-#     cols = numCols(matrix)
-#     replacements = 0
-#     scale = 0
-#     for j in range(cols):
-#         for i in range(1,rows+1):
-#             if matrix[i][j]!= 0 and matrix[i][j]:
+def reducedEchelon(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    matrix = echelon(matrix)
+    pivotj = 0
+    for n in range(min(rows,cols)):
+        if matrix[n][pivotj] == 1:
+            for i in range(0,n):
+                ratio = matrix[i][n]/matrix[n][n]
+                for j in range(n, cols):
+                    matrix[i][j] -= ratio*matrix[n][j]
+        else:
+            pivotj += 1
+    return matrix
 
 
 def submatrix(matrix, indexi, indexj):
