@@ -136,6 +136,14 @@ def multiply(mat1,mat2):
                 ans[i][j] += mat1[i][n]*mat2[n][j]
     return ans
 
+def power(matrix, power):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    for i in range(rows):
+        for j in range(cols):
+            matrix[i][j] = matrix[i][j]**power
+    return matrix
+
 def swap(matrix,row1,row2):
     temp = matrix[row1]
     matrix[row1] = matrix[row2]

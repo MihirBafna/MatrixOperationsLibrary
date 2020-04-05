@@ -29,6 +29,7 @@ Here is the list of functions that the module currently contains:
 | dot | dot product of two vectors |
 | cross | cross product of two vectors |
 | multiply | matrix product of two matrices |
+| power | raises each element of a matrix to a specified power |
 | swap | swaps two specified rows of a matrix |
 | pivot | returns the index of the first pivot position |
 | upperTriangle | returns a tuple of the given matrix in upper triangular form and the number of row interchanges |
