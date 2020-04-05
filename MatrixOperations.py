@@ -209,20 +209,25 @@ def augment(matrix, ans):
                 augment[i][j] = matrix[i][j]
     return augment
 
+# def linearDependence(matrix):
+#     rows = numRows(matrix)
+#     cols = numCols(matrix)
+#     answermatrix = reducedEchelon(augment(matrix, np.zeros(shape=(1,cols))))
+
 # def solve(A,b):
 #     answermatrix = reducedEchelon(augment(A,b))
 
 
-def determinant(matrix):
-    rows = numRows(matrix)
-    cols = numCols(matrix)
-    if(not isSquare(matrix)):
-        return "ERROR: must use a square matrix for the determinant() function"
-    mat = echelon(matrix)
-    ans = 0
-    for n in range(min(rows,cols)):
-        ans *= mat[n][n]
-    return ans
+# def determinant(matrix):
+#     rows = numRows(matrix)
+#     cols = numCols(matrix)
+#     if(not isSquare(matrix)):
+#         return "ERROR: must use a square matrix for the determinant() function"
+#     mat = echelon(matrix)
+#     ans = 0
+#     for n in range(min(rows,cols)):
+#         ans *= mat[n][n]
+#     return ans
 
 def recursiveDeterminant(matrix):
     det = 0
@@ -232,7 +237,7 @@ def recursiveDeterminant(matrix):
         return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
     else:
         for j in range(numCols(matrix)):
-            det += (-1)**(j)*matrix[0][j]*determinant(submatrix(matrix,0,j))
+            det += (-1)**(j)*matrix[0][j]*recursiveDeterminant(submatrix(matrix,0,j))
     return det    
 
 
