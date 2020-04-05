@@ -7,7 +7,7 @@ Python Module that contains functions for matrix operations and theoretical inte
 move the module MatrixOperations.py into your working directory and import it into the file of your choosing
 
 ```python
-import MatrixOperations as mo
+import MatrixOperationsLibrary as mol
 ```
 
 ## Module Functions
