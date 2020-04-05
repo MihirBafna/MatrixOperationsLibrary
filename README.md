@@ -30,5 +30,6 @@ Here is the list of functions that the module currently contains:
 | reducedEchelon | row reduces a given matrix to reduced echelon form (RREF) |
 | augment | combines a matrix and a vector into an augmented matrix |
 | submatrix | given an n * n matrix and a row and column index, returns a submatrix disregarding specified row/column |
+| solve | solves the equation Ax = b for the x vector, where A is a given coeffecient matrix and b is a given answer vector |
 | determinant | finds the determinant of a given matrix |
 | recursiveDeterminant | finds the determinant of a given matrix recursively |
