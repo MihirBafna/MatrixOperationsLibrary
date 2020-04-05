@@ -152,20 +152,35 @@ def pivot(matrix, colindex):
         i += 1
     return i
 
-
-def echelon(matrix):
+def upperTriangle(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
+    swaps = 0
     for n in range(min(rows, cols)):
+        print(matrix)
         pivotpos = pivot(matrix, n)
         if (pivotpos == -1):
             break
-        matrix = swap(matrix, n, pivotpos)
+        if (n!=pivotpos):
+            swaps += 1
+            matrix = swap(matrix, n, pivotpos)
         for i in range(pivotpos+1, rows):
             ratio = matrix[i][pivotpos]/matrix[pivotpos][pivotpos]
             for j in range(pivotpos, cols):
                 matrix[i][j] -= ratio*matrix[pivotpos][j]
-    return matrix
+    return matrix,swaps
+
+def echelon(matrix):
+    mat = upperTriangle(matrix)[0]
+    rows = numRows(mat)
+    cols = numCols(mat)
+    for i in range(rows):
+        divisor = mat[i][i]
+        for j in range(cols):
+            if divisor != 0:
+                mat[i][j] /= divisor
+    return mat
+
 
 # def reducedEchelon(matrix):
 #     rows = numRows(matrix)
@@ -218,16 +233,16 @@ def augment(matrix, ans):
 #     answermatrix = reducedEchelon(augment(A,b))
 
 
-# def determinant(matrix):
-#     rows = numRows(matrix)
-#     cols = numCols(matrix)
-#     if(not isSquare(matrix)):
-#         return "ERROR: must use a square matrix for the determinant() function"
-#     mat = echelon(matrix)
-#     ans = 0
-#     for n in range(min(rows,cols)):
-#         ans *= mat[n][n]
-#     return ans
+def determinant(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    if(not isSquare(matrix)):
+        return "ERROR: must use a square matrix for the determinant() function"
+    mat,interchanges = upperTriangle(matrix)
+    ans = 1
+    for n in range(min(rows,cols)):
+        ans *= mat[n][n]
+    return ans if interchanges%2==0 else ans*(-1)
 
 def recursiveDeterminant(matrix):
     det = 0

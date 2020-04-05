@@ -26,7 +26,8 @@ Here is the list of functions that the module currently contains:
 | multiply | matrix product of two matrices |
 | swap | swaps two specified rows of a matrix |
 | pivot | returns the index of the first pivot position |
-| echelon | row reduces a given matrix to echelon form (upper triangular form) |
+| upperTriangle | returns a tuple of the given matrix in upper triangular form and the number of row interchanges |
+| echelon | row reduces a given matrix to echelon form |
 | reducedEchelon | row reduces a given matrix to reduced echelon form (RREF) |
 | augment | combines a coeffecient matrix and an answer vector into an augmented matrix |
 | submatrix | given an n * n matrix and a row and column index, returns a submatrix disregarding specified row/column |
