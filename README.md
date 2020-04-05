@@ -1,5 +1,5 @@
 # MatrixCalculator
-Python Module that contains functions for matrix operations and theoretical calculations in Linear Algebra (ranging from basic matrix algebra to determinants, vector spaces, and eigenvalues/vectors)
+Python Module that contains functions for matrix operations and theoretical interpretations in Linear Algebra (ranging from basic matrix algebra to determinants, vector spaces, and eigenvalues/vectors)
 
 # Usage
 move the module MatrixOperations.py into your working directory and import it into the file of your choosing
