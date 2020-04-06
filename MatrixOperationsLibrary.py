@@ -200,6 +200,9 @@ def reducedEchelon(matrix):
     matrix = echelon(matrix)
     pivotj = 0
     for n in range(min(rows,cols)):
+        print(matrix)
+        if pivotj > n:
+            break
         if matrix[n][pivotj] == 1:
             for i in range(0,n):
                 ratio = matrix[i][n]/matrix[n][n]
@@ -207,6 +210,7 @@ def reducedEchelon(matrix):
                     matrix[i][j] -= ratio*matrix[n][j]
         else:
             pivotj += 1
+        pivotj += 1
     return matrix
 
 
