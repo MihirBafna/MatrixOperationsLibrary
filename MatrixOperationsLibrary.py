@@ -1,8 +1,8 @@
 import numpy as np
 
 def loadMatrix(filename):
-    file = open(filename, 'r')
-    linelist = file.readlines()
+    with open(filename, 'r') as file:
+        linelist = file.readlines()
     rows = len(linelist)
     cols = len(linelist[0].split())
     matrix = np.zeros(shape=(rows, cols))
@@ -149,20 +149,21 @@ def power(matrix, power):
     return matrix
 
 def swap(matrix,row1,row2):
-    temp = matrix[row1]
-    matrix[row1] = matrix[row2]
-    matrix[row2] = temp
+    matrix[[row1,row2]] = matrix[[row2,row1]]
     return matrix
 
-def pivot(matrix, colindex):
-    i = colindex
+def pivot(matrix, index):
+    i = index
+    j = index
     rows = numRows(matrix)
-    while matrix[i][colindex] == 0:
-        if(i>=rows-1):
-            i=-1
-            break
-        i += 1
-    return i
+    cols = numCols(matrix)
+    while j<cols and matrix[i][j] == 0:
+        print(i,j)
+        i+=1
+        if i>=rows:
+            i = index
+            j += 1
+    return (i,j) if j<cols else (-1,-1)
 
 def upperTriangle(matrix):
     rows = numRows(matrix)
@@ -170,19 +171,22 @@ def upperTriangle(matrix):
     swaps = 0
     for n in range(min(rows, cols)):
         print(matrix)
-        pivotpos = pivot(matrix, n)
-        if (pivotpos == -1):
+        pivoti,pivotj = pivot(matrix, n)
+        print(n,pivoti,pivotj)
+        if (pivoti == -1 or pivotj == -1):
             break
-        if (n!=pivotpos):
+        if (n!=pivoti):
             swaps += 1
-            matrix = swap(matrix, n, pivotpos)
-        for i in range(pivotpos+1, rows):
-            ratio = matrix[i][pivotpos]/matrix[pivotpos][pivotpos]
-            for j in range(pivotpos, cols):
-                matrix[i][j] -= ratio*matrix[pivotpos][j]
+            matrix = swap(matrix, n, pivoti)
+            print(matrix)
+        for i in range(pivoti+1, rows):
+            ratio = matrix[i][pivotj]/matrix[n][pivotj]
+            for j in range(pivotj, cols):
+                matrix[i][j] -= ratio*matrix[n][j]
     return matrix,swaps
 
 def echelon(matrix):
+    print("----------------EF-----------------")
     mat = upperTriangle(matrix)[0]
     rows = numRows(mat)
     cols = numCols(mat)
@@ -198,10 +202,12 @@ def reducedEchelon(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
     matrix = echelon(matrix)
+    print("----------------RREF-----------------")
     pivotj = 0
     for n in range(min(rows,cols)):
         print(matrix)
-        if pivotj > n:
+        print(n,pivotj)
+        if pivotj >= cols:
             break
         if matrix[n][pivotj] == 1:
             for i in range(0,n):
