@@ -3,13 +3,13 @@ import numpy as np
 def loadMatrix(filename):
     with open(filename, 'r') as file:
         linelist = file.readlines()
-    rows = len(linelist)
-    cols = len(linelist[0].split())
-    matrix = np.zeros(shape=(rows, cols))
-    for i in range(rows):
-        line = linelist[i].split()
-        for j in range(cols):
-            matrix[i][j] = line[j]
+        rows = len(linelist)
+        cols = len(linelist[0].split())
+        matrix = np.zeros(shape=(rows, cols))
+        for i in range(rows):
+            line = linelist[i].split()
+            for j in range(cols):
+                matrix[i][j] = line[j]
     print("matrix loaded ...")
     return matrix
 
