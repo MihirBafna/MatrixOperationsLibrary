@@ -159,7 +159,6 @@ def pivot(matrix, index):
     rows = numRows(matrix)
     cols = numCols(matrix)
     while j<cols and matrix[i][j] == 0:
-        print(i,j)
         i+=1
         if i>=rows:
             i = index
@@ -172,6 +171,7 @@ def upperTriangle(matrix):
     swaps = 0
     for n in range(min(rows, cols)):
         print(matrix)
+        print()
         pivoti,pivotj = pivot(matrix, n)
         if (pivoti == -1 or pivotj == -1):
             break
@@ -181,7 +181,6 @@ def upperTriangle(matrix):
         if (n!=pivoti):
             swaps += 1
             matrix = swap(matrix, n, pivoti)
-            print(matrix)
         for i in range(pivoti+1, rows):
             ratio = matrix[i][pivotj]/matrix[n][pivotj]
             for j in range(pivotj, cols):
@@ -210,8 +209,8 @@ def reducedEchelon(matrix):
     print("----------------RREF-----------------")
     for n in range(min(rows,cols)):
         print(matrix)
+        print()
         pivoti,pivotj = pivot(matrix, n)
-        print(n,pivoti, pivotj)
         if pivotj >= cols:
             break
         if matrix[n][pivotj] == 1:
