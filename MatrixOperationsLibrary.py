@@ -172,9 +172,11 @@ def upperTriangle(matrix):
     for n in range(min(rows, cols)):
         print(matrix)
         pivoti,pivotj = pivot(matrix, n)
-        print(n,pivoti,pivotj)
         if (pivoti == -1 or pivotj == -1):
             break
+        if matrix[pivoti][pivotj] < 0:
+            for n in range(cols):
+                matrix[pivoti][n] *= -1
         if (n!=pivoti):
             swaps += 1
             matrix = swap(matrix, n, pivoti)
@@ -183,6 +185,10 @@ def upperTriangle(matrix):
             ratio = matrix[i][pivotj]/matrix[n][pivotj]
             for j in range(pivotj, cols):
                 matrix[i][j] -= ratio*matrix[n][j]
+        for i in range(rows):
+            for j in range(cols):
+                matrix[i][j] = 0 if matrix[i][j] == -0 else matrix[i][j]
+
     return matrix,swaps
 
 def echelon(matrix):
@@ -203,20 +209,17 @@ def reducedEchelon(matrix):
     cols = numCols(matrix)
     matrix = echelon(matrix)
     print("----------------RREF-----------------")
-    pivotj = 0
     for n in range(min(rows,cols)):
         print(matrix)
-        print(n,pivotj)
+        pivoti,pivotj = pivot(matrix, n)
+        print(n,pivoti, pivotj)
         if pivotj >= cols:
             break
         if matrix[n][pivotj] == 1:
-            for i in range(0,n):
-                ratio = matrix[i][n]/matrix[n][n]
-                for j in range(n, cols):
+            for i in range(0,pivoti):
+                ratio = matrix[i][pivotj]/matrix[n][pivotj]
+                for j in range(pivotj, cols):
                     matrix[i][j] -= ratio*matrix[n][j]
-        else:
-            pivotj += 1
-        pivotj += 1
     return matrix
 
 
