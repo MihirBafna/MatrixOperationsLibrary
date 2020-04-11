@@ -1,15 +1,16 @@
 import numpy as np
 
 def loadMatrix(filename):
+    linelist = []
     with open(filename, 'r') as file:
         linelist = file.readlines()
-        rows = len(linelist)
-        cols = len(linelist[0].split())
-        matrix = np.zeros(shape=(rows, cols))
-        for i in range(rows):
-            line = linelist[i].split()
-            for j in range(cols):
-                matrix[i][j] = line[j]
+    rows = len(linelist)
+    cols = len(linelist[0].split())
+    matrix = np.zeros(shape=(rows, cols))
+    for i in range(rows):
+        line = linelist[i].split()
+        for j in range(cols):
+            matrix[i][j] = line[j]
     print("matrix loaded ...")
     return matrix
 
@@ -185,9 +186,6 @@ def upperTriangle(matrix):
             ratio = matrix[i][pivotj]/matrix[n][pivotj]
             for j in range(pivotj, cols):
                 matrix[i][j] -= ratio*matrix[n][j]
-        for i in range(rows):
-            for j in range(cols):
-                matrix[i][j] = 0 if matrix[i][j] == -0 else matrix[i][j]
 
     return matrix,swaps
 
@@ -201,6 +199,7 @@ def echelon(matrix):
         for j in range(cols):
             if divisor != 0:
                 mat[i][j] /= divisor
+            mat[i][j] = 0 if mat[i][j] == -0 else mat[i][j]
     return mat
 
 
@@ -220,6 +219,9 @@ def reducedEchelon(matrix):
                 ratio = matrix[i][pivotj]/matrix[n][pivotj]
                 for j in range(pivotj, cols):
                     matrix[i][j] -= ratio*matrix[n][j]
+    for i in range(rows):
+        for j in range(cols):
+            matrix[i][j] = 0 if matrix[i][j] == -0 else matrix[i][j]
     return matrix
 
 
