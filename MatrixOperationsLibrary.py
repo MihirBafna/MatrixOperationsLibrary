@@ -167,7 +167,6 @@ def pivot(matrix, index):
     return (i,j) if j<cols else (-1,-1)
 
 
-
 def upperTriangle(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
@@ -178,9 +177,10 @@ def upperTriangle(matrix):
         if (pivoti == -1 or pivotj == -1):
             break
         if mat[pivoti][pivotj] < 0:
-            for n in range(cols):
-                mat[pivoti][n] *= -1
+            for x in range(cols):
+                mat[pivoti][x] *= -1
         if (n!=pivoti):
+            print(n)
             swaps += 1
             mat = swap(mat, n, pivoti)
         for i in range(pivoti+1, rows):
@@ -250,19 +250,21 @@ def submatrix(matrix, indexi, indexj):
         jcount = 0
     return submatrix
 
-def augment(matrix, ans):
-    rows = numRows(matrix)
-    cols = numCols(matrix)
-    if len(ans) != rows:
-        return "ERROR: answer does not have enough entries to be augmented with the given matrix"
-    augment = np.zeros(shape=(rows, cols+1))
-    for i in range(rows):
-        for j in range(cols+1):
-            if j == cols:
-                augment[i][j] = ans[i][0]
+def augment(matrix1, matrix2):
+    rows1 = numRows(matrix1)
+    cols1 = numCols(matrix1)
+    rows2 = numRows(matrix2)
+    cols2 = numCols(matrix2)
+    if rows1 != rows2:
+        return "ERROR: answer does not have the right number of entries to be augmented with the given matrix"
+    augmented = np.zeros(shape=(rows1, cols1+cols2))
+    for i in range(rows1):
+        for j in range(cols1+cols2):
+            if j<cols1:
+                augmented[i][j] = matrix1[i][j]
             else:
-                augment[i][j] = matrix[i][j]
-    return augment
+                augmented[i][j] = matrix2[i][j-cols1]
+    return augmented
 
 def linearDependence(matrix):
     cols = numCols(matrix)
@@ -273,11 +275,7 @@ def linearDependence(matrix):
     else:
         print("The columns of the matrix are linearly dependent as each column does not have a pivot position, \ntherefore there are free variables")
         return True
-
-def solve(A,b):
-    answermatrix = reducedEchelon(augment(A,b))
-
-
+    
 
 def determinant(matrix):
     rows = numRows(matrix)
@@ -291,17 +289,39 @@ def determinant(matrix):
     return ans if interchanges%2==0 else ans*(-1)
 
 def recursiveDeterminant(matrix):
-    det = 0
+    ans = 0
     if(not isSquare(matrix)):
         return "ERROR: must use a square matrix for the determinant() function"
     if(numRows(matrix)==2):
         return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0]
     else:
         for j in range(numCols(matrix)):
-            det += (-1)**(j)*matrix[0][j]*recursiveDeterminant(submatrix(matrix,0,j))
-    return det    
+            ans += (-1)**(j)*matrix[0][j]*recursiveDeterminant(submatrix(matrix,0,j))
+    return ans    
 
+def inverse(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    if not isSquare(matrix):
+        return "ERROR: matrix must be square to be invertible\n"
+    # if determinant(matrix) == 0:
+    #     return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
+    identitymatrix = identity(rows)
+    augmented = augment(matrix, identitymatrix)
+    reduced = reducedEchelon(augmented)
+    ans = np.zeros(shape=(rows,cols))
+    for i in range(rows):
+        for j in range(cols):
+            ans[i][j] = augmented[i][j+cols]
+    return ans    
 
+# def solve(A,b):
+#     rows = numRows(A)
+#     colsA = numCols(A)
+#     augmentmatrix = reducedEchelon(augment(A,b))
+#     xvector = np.zeros(shape={rows,1})
+#     if rows != numRows(b) or numCols(b) != 1:
+#         return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same"
 
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
 
@@ -312,3 +332,4 @@ def totalPivots(matrix):
     for n in range(min(rows, cols)):
         pivots += 1 if pivot(matrix, n) != (-1, -1) else 0
     return pivots
+
