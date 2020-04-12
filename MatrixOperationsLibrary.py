@@ -197,11 +197,16 @@ def echelon(matrix):
     rows = numRows(mat)
     cols = numCols(mat)
     for i in range(rows):
-        divisor = mat[i][i]
+        j = 0
+        while j<cols and mat[i][j]==0:
+            j+=1
+        divisor = mat[i][j] if j<cols else 1
         for j in range(cols):
             if divisor != 0:
                 mat[i][j] /= divisor
             mat[i][j] = 0 if mat[i][j] == -0 else mat[i][j]
+    print(mat)
+    print()
     return mat
 
 
@@ -266,11 +271,12 @@ def linearDependence(matrix):
         print("The columns of the matrix are linearly independent as there are pivot positions in each column")
         return False
     else:
-        print("The columns of the matrix are linearly dependent as each column does not have a pivot positions, therefore there are free variables")
+        print("The columns of the matrix are linearly dependent as each column does not have a pivot position, \ntherefore there are free variables")
         return True
 
-# def solve(A,b):
-#     answermatrix = reducedEchelon(augment(A,b))
+def solve(A,b):
+    answermatrix = reducedEchelon(augment(A,b))
+
 
 
 def determinant(matrix):
