@@ -302,6 +302,23 @@ def recursiveDeterminant(matrix):
     return ans    
 
 
+def inverse(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    if not isSquare(matrix):
+        return "ERROR: matrix must be square to be invertible\n"
+    if determinant(matrix) == 0:
+        return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
+    identitymatrix = identity(rows)
+    augmented = augment(matrix, identitymatrix)
+    reduced = reducedEchelon(augmented)
+    ans = np.zeros(shape=(rows, cols))
+    for i in range(rows):
+        for j in range(cols):
+            ans[i][j] = reduced[i][j+cols]
+    return ans
+
+
 # def solve(A,b):
 #     rows = numRows(A)
 #     colsA = numCols(A)
