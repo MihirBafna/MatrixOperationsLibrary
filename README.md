@@ -36,6 +36,7 @@ Here is the list of functions that the module currently contains:
 | echelon | row reduces a given matrix to echelon form |
 | reducedEchelon | row reduces a given matrix to reduced row echelon form (RREF) |
 | augment | combines a coeffecient matrix and an answer vector into an augmented matrix |
+| linearDependence | returns whether or not the columns of the given matrix are linearly dependent (boolean) |
 | submatrix | given an n by n matrix and a row and column index, returns a n-1 by n-1 submatrix disregarding the specified row/column |
 | solve | solves the equation Ax = b for the x vector, where A is a given coeffecient matrix and b is a given answer vector |
 | determinant | finds the determinant of a given matrix |

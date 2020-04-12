@@ -1,5 +1,6 @@
 import numpy as np
 
+#-------------------------------------------------User Functions---------------------------------------------------#
 def loadMatrix(filename):
     linelist = []
     with open(filename, 'r') as file:
@@ -165,28 +166,30 @@ def pivot(matrix, index):
             j += 1
     return (i,j) if j<cols else (-1,-1)
 
+
+
 def upperTriangle(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
     swaps = 0
+    mat = matrix
     for n in range(min(rows, cols)):
-        print(matrix)
-        print()
-        pivoti,pivotj = pivot(matrix, n)
+        pivoti,pivotj = pivot(mat, n)
         if (pivoti == -1 or pivotj == -1):
             break
-        if matrix[pivoti][pivotj] < 0:
+        if mat[pivoti][pivotj] < 0:
             for n in range(cols):
-                matrix[pivoti][n] *= -1
+                mat[pivoti][n] *= -1
         if (n!=pivoti):
             swaps += 1
-            matrix = swap(matrix, n, pivoti)
+            mat = swap(mat, n, pivoti)
         for i in range(pivoti+1, rows):
-            ratio = matrix[i][pivotj]/matrix[n][pivotj]
+            ratio = mat[i][pivotj]/mat[n][pivotj]
             for j in range(pivotj, cols):
-                matrix[i][j] -= ratio*matrix[n][j]
-
-    return matrix,swaps
+                mat[i][j] -= ratio*mat[n][j]
+        print(mat)
+        print()
+    return mat,swaps
 
 def echelon(matrix):
     print("----------------EF-----------------")
@@ -205,23 +208,23 @@ def echelon(matrix):
 def reducedEchelon(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
-    matrix = echelon(matrix)
+    mat = echelon(matrix)
     print("----------------RREF-----------------")
     for n in range(min(rows,cols)):
-        print(matrix)
-        print()
-        pivoti,pivotj = pivot(matrix, n)
+        pivoti,pivotj = pivot(mat, n)
         if pivotj >= cols:
             break
-        if matrix[n][pivotj] == 1:
+        if mat[n][pivotj] == 1:
             for i in range(0,pivoti):
-                ratio = matrix[i][pivotj]/matrix[n][pivotj]
+                ratio = mat[i][pivotj]/mat[n][pivotj]
                 for j in range(pivotj, cols):
-                    matrix[i][j] -= ratio*matrix[n][j]
+                    mat[i][j] -= ratio*mat[n][j]
+        print(mat)
+        print()
     for i in range(rows):
         for j in range(cols):
-            matrix[i][j] = 0 if matrix[i][j] == -0 else matrix[i][j]
-    return matrix
+            mat[i][j] = 0 if mat[i][j] == -0 else mat[i][j]
+    return mat
 
 
 def submatrix(matrix, indexi, indexj):
@@ -256,10 +259,15 @@ def augment(matrix, ans):
                 augment[i][j] = matrix[i][j]
     return augment
 
-# def linearDependence(matrix):
-#     rows = numRows(matrix)
-#     cols = numCols(matrix)
-#     answermatrix = reducedEchelon(augment(matrix, np.zeros(shape=(1,cols))))
+def linearDependence(matrix):
+    cols = numCols(matrix)
+    totalpivots = totalPivots(reducedEchelon(matrix))
+    if totalpivots == cols:
+        print("The columns of the matrix are linearly independent as there are pivot positions in each column")
+        return False
+    else:
+        print("The columns of the matrix are linearly dependent as each column does not have a pivot positions, therefore there are free variables")
+        return True
 
 # def solve(A,b):
 #     answermatrix = reducedEchelon(augment(A,b))
@@ -289,4 +297,12 @@ def recursiveDeterminant(matrix):
 
 
 
+#-------------------------------------------------Non-user Functions---------------------------------------------------#
 
+def totalPivots(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    pivots = 0
+    for n in range(min(rows, cols)):
+        pivots += 1 if pivot(matrix, n) != (-1, -1) else 0
+    return pivots
