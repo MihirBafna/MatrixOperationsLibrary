@@ -31,7 +31,7 @@ Here is the list of functions that the module currently contains:
 | multiply | matrix product of two matrices |
 | power | raises each element of a matrix to a specified power |
 | swap | swaps two specified rows of a matrix |
-| pivot | returns the index of the first pivot position |
+| pivot | returns the indices of the first pivot position after ths given index |
 | upperTriangle | returns a tuple of the given matrix in upper triangular form and the number of row interchanges |
 | echelon | row reduces a given matrix to echelon form |
 | reducedEchelon | row reduces a given matrix to reduced row echelon form (RREF) |
@@ -42,4 +42,3 @@ Here is the list of functions that the module currently contains:
 | recursiveDeterminant | finds the determinant of a given matrix recursively |
 | inverse | returns the inverse of a given matrix |
 | solve | solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
-
