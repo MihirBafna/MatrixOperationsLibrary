@@ -145,14 +145,16 @@ def multiply(mat1,mat2):
 def power(matrix, power):
     rows = numRows(matrix)
     cols = numCols(matrix)
+    ans = np.zeros(shape=(rows,cols))
     for i in range(rows):
         for j in range(cols):
-            matrix[i][j] = matrix[i][j]**power
-    return matrix
+            ans[i][j] = matrix[i][j]**power
+    return ans
 
 def swap(matrix,row1,row2):
-    matrix[[row1,row2]] = matrix[[row2,row1]]
-    return matrix
+    ans = copyMatrix(matrix)
+    ans[[row1,row2]] = ans[[row2,row1]]
+    return ans
 
 def pivot(matrix, index):
     i = index
@@ -168,10 +170,11 @@ def pivot(matrix, index):
 
 
 def upperTriangle(matrix):
+    print("----------------EF/UT-----------------")
     rows = numRows(matrix)
     cols = numCols(matrix)
     swaps = 0
-    mat = matrix
+    mat = copyMatrix(matrix)
     for n in range(min(rows, cols)):
         pivoti,pivotj = pivot(mat, n)
         if (pivoti == -1 or pivotj == -1):
@@ -192,7 +195,6 @@ def upperTriangle(matrix):
     return mat,swaps
 
 def echelon(matrix):
-    print("----------------EF-----------------")
     mat = upperTriangle(matrix)[0]
     rows = numRows(mat)
     cols = numCols(mat)
@@ -304,15 +306,15 @@ def inverse(matrix):
     cols = numCols(matrix)
     if not isSquare(matrix):
         return "ERROR: matrix must be square to be invertible\n"
-    # if determinant(matrix) == 0:
-    #     return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
+    if determinant(matrix) == 0:
+        return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
     identitymatrix = identity(rows)
     augmented = augment(matrix, identitymatrix)
     reduced = reducedEchelon(augmented)
     ans = np.zeros(shape=(rows,cols))
     for i in range(rows):
         for j in range(cols):
-            ans[i][j] = augmented[i][j+cols]
+            ans[i][j] = reduced[i][j+cols]
     return ans    
 
 # def solve(A,b):
@@ -324,6 +326,15 @@ def inverse(matrix):
 #         return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same"
 
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
+
+def copyMatrix(matrix):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    new = np.zeros(shape=(rows,cols))
+    for i in range(rows):
+        for j in range(cols):
+            new[i][j] = matrix[i][j]
+    return new    
 
 def totalPivots(matrix):
     rows = numRows(matrix)
