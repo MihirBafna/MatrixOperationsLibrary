@@ -41,5 +41,5 @@ Here is the list of functions that the module currently contains:
 | determinant | finds the determinant of a given matrix |
 | recursiveDeterminant | finds the determinant of a given matrix recursively |
 | inverse | returns the inverse of a given matrix |
-| solve | solves the equation Ax = b for the x vector, where A is a given coeffecient matrix and b is a given answer vector |
+| solve | solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
 
