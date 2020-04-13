@@ -319,13 +319,51 @@ def inverse(matrix):
     return ans
 
 
-# def solve(A,b):
-#     rows = numRows(A)
-#     colsA = numCols(A)
-#     augmentmatrix = reducedEchelon(augment(A,b))
-#     xvector = np.zeros(shape={rows,1})
-#     if rows != numRows(b) or numCols(b) != 1:
-#         return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same"
+def gaussianSolve(A,b):
+    rows = numRows(A)
+    colsA = numCols(A)
+    if rows != numRows(b) or numCols(b) != 1:
+        return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same"
+    augmentmatrix = reducedEchelon(augment(A,b))
+    reducedA = np.zeros(shape=(rows,colsA))
+    identitymatrix = identity(rows)
+    xvector = np.zeros(shape=(colsA,1))
+    totalpivots = totalPivots(reducedA)
+    for i in range(rows):
+        if augmentmatrix[i][i] == 1:
+            xvector[i][0] = augmentmatrix[i][colsA] 
+        for j in range(colsA):
+            reducedA[i][j] = augmentmatrix[i][j]
+    for i in range(rows):
+        if np.array_equal(reducedA[i],[0]*colsA) and augmentmatrix[i][colsA-1] != 0: # testing if system is INCONSISTENT
+            return "The given system Ax = b is inconsistent (there are no solutions for the x vector)"
+    if np.array_equal(identitymatrix,reducedA): # testing if the system is CONSISTENT and UNIQUE
+        return xvector
+    else: # the system is CONSISTENT but NOT UNIQUE (infinite solutions due to free variables)
+        freevars = {"x"+str(n+1):[0.0]*colsA for n in range(colsA)}
+        def parametricVectorForm():
+            key = "x"+str(j+1)
+            freevars[key][j] = 1.0
+            for i in range(rows):
+                if i != j:
+                    freevars[key][i] = (-1) * \
+                        augmentmatrix[i][j] if augmentmatrix[i][j] != 0 else 0.0
+        for j in range(colsA):
+            if j >= rows:
+                parametricVectorForm()
+            elif augmentmatrix[j][j] != 1:
+                parametricVectorForm()
+    xvector = transpose(xvector)[0]
+    xvectorStr = "\033[1m" + "x = " + "\033[0m" + str(xvector) if not np.array_equal(xvector, [0]*colsA) else ""
+    for j in range(colsA):
+        xkey = "x"+str(j+1)
+        if freevars[xkey] != [0]*colsA:
+            xvectorStr += " + "+str(freevars[xkey])+" * "+xkey
+        else:
+            del freevars[xkey]
+    return xvectorStr
+
+
 
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
 
@@ -345,4 +383,3 @@ def totalPivots(matrix):
     for n in range(min(rows, cols)):
         pivots += 1 if pivot(matrix, n) != (-1, -1) else 0
     return pivots
-
