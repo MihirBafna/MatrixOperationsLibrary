@@ -41,6 +41,6 @@ Here is the list of functions that the module currently contains:
 | determinant | finds the determinant of a given matrix |
 | recursiveDeterminant | finds the determinant of a given matrix recursively |
 | inverse | returns the inverse of a given matrix |
-| gaussianSolve | using Gaussian elimination, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
+| gaussianSolve | using Gaussian elimination, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector. This function will determine if a system is inconsistent, return a single **x** vector if the solution is unique, or return a dictionary where each key (const, x1, x1, x2, etc.) will have a vector as its value (this represents the Parametric Vector Form of the solution).  |
 | invertedSolve | using matrix invertability, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
 | cramersSolve | using Cramer's Rule, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
