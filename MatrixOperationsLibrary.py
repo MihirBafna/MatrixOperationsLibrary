@@ -142,7 +142,7 @@ def multiply(mat1,mat2):
                 ans[i][j] += mat1[i][n]*mat2[n][j]
     return ans
 
-def power(matrix, power):
+def elementPower(matrix, power):
     rows = numRows(matrix)
     cols = numCols(matrix)
     ans = np.zeros(shape=(rows,cols))
@@ -362,6 +362,7 @@ def gaussianSolve(A,b):
         else:
             del freevars[xkey]
     return xvectorStr
+
 
 
 
