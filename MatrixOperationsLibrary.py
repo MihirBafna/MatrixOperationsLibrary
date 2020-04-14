@@ -170,7 +170,7 @@ def pivot(matrix, index):
 
 
 def upperTriangle(matrix):
-    print("----------------EF/UT-----------------")
+    # print("----------------EF/UT-----------------")
     rows = numRows(matrix)
     cols = numCols(matrix)
     swaps = 0
@@ -183,15 +183,14 @@ def upperTriangle(matrix):
             for x in range(cols):
                 mat[pivoti][x] *= -1
         if (n!=pivoti):
-            print(n)
             swaps += 1
             mat = swap(mat, n, pivoti)
         for i in range(pivoti+1, rows):
             ratio = mat[i][pivotj]/mat[n][pivotj]
             for j in range(pivotj, cols):
                 mat[i][j] -= ratio*mat[n][j]
-        print(mat)
-        print()
+        # print(mat)
+        # print()
     return mat,swaps
 
 def echelon(matrix):
@@ -207,8 +206,8 @@ def echelon(matrix):
             if divisor != 0:
                 mat[i][j] /= divisor
             mat[i][j] = 0 if mat[i][j] == -0 else mat[i][j]
-    print(mat)
-    print()
+    # print(mat)
+    # print()
     return mat
 
 
@@ -216,7 +215,7 @@ def reducedEchelon(matrix):
     rows = numRows(matrix)
     cols = numCols(matrix)
     mat = echelon(matrix)
-    print("----------------RREF-----------------")
+    # print("----------------RREF-----------------")
     for n in range(min(rows,cols)):
         pivoti,pivotj = pivot(mat, n)
         if pivotj >= cols:
@@ -226,8 +225,8 @@ def reducedEchelon(matrix):
                 ratio = mat[i][pivotj]/mat[n][pivotj]
                 for j in range(pivotj, cols):
                     mat[i][j] -= ratio*mat[n][j]
-        print(mat)
-        print()
+        # print(mat)
+        # print()
     for i in range(rows):
         for j in range(cols):
             mat[i][j] = 0 if mat[i][j] == -0 else mat[i][j]
@@ -364,7 +363,15 @@ def gaussianSolve(A,b):
     return xvectorStr
 
 
-
+def inverseSolve(A,b):
+    rows = numRows(A)
+    colsA = numCols(A)
+    if not isSquare(A):
+        return "ERROR: matrix A must be square to be invertible\n"
+    if determinant(A) == 0:
+        return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
+    inverseA = inverse(A)
+    return multiply(b,inverseA)
 
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
 

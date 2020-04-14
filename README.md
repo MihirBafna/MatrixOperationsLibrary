@@ -29,7 +29,7 @@ Here is the list of functions that the module currently contains:
 | dot | dot product of two vectors |
 | cross | cross product of two vectors |
 | multiply | matrix product of two matrices |
-| power | raises each element of a matrix to a specified power |
+| elementPower | raises each element of a matrix to a specified power |
 | swap | swaps two specified rows of a matrix |
 | pivot | returns the indices of the first pivot position after ths given index |
 | upperTriangle | returns a tuple of the given matrix in upper triangular form and the number of row interchanges |
@@ -42,5 +42,5 @@ Here is the list of functions that the module currently contains:
 | recursiveDeterminant | finds the determinant of a given matrix recursively |
 | inverse | returns the inverse of a given matrix |
 | gaussianSolve | using Gaussian elimination, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector. This function will determine if a system is inconsistent, return a single **x** vector if the solution is unique, or return a dictionary where each key (const, x1, x1, x2, etc.) will have a vector as its value (this represents the Parametric Vector Form of the solution).  |
-| invertedSolve | using the property of matrix invertability, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
+| inverseSolve | using the property of matrix invertability, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
 | cramersSolve | using Cramer's Rule, solves the equation **Ax = b** for the **x** vector, where **A** is a given coeffecient matrix and **b** is a given answer vector |
