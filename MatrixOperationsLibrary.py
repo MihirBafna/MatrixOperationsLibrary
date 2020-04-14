@@ -366,13 +366,30 @@ def gaussianSolve(A,b):
 def inverseSolve(A,b):
     rows = numRows(A)
     colsA = numCols(A)
+    if rows != numRows(b) or numCols(b) != 1:
+        return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same\n"
     if not isSquare(A):
         return "ERROR: matrix A must be square to be invertible\n"
     if determinant(A) == 0:
-        return "ERROR: determinant is zero, therefore this matrix is not invertible\n"
+        return "ERROR: to use inverseSolve, matrix A must be invertible\n"
     inverseA = inverse(A)
-    return multiply(b,inverseA)
+    return multiply(inverseA,b)
 
+
+def cramersSolve(A,b):
+    rows = numRows(A)
+    colsA = numCols(A)
+    xvector = np.zeros(shape=(colsA, 1))
+    detA = determinant(A)
+    if detA == 0:
+        return "ERROR: to use cramersSolve, matrix A must be invertible\n"
+    if rows != numRows(b) or numCols(b) != 1:
+        return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same\n"
+    for j in range(colsA):
+        detAjb = determinant(replaceCol(A,j,b))
+        xvector[j] = detAjb/detA
+        if xvector[j] == -0: xvector[j] = 0
+    return xvector
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
 
 def copyMatrix(matrix):
@@ -391,3 +408,12 @@ def totalPivots(matrix):
     for n in range(min(rows, cols)):
         pivots += 1 if pivot(matrix, n) != (-1, -1) else 0
     return pivots
+
+def replaceCol(matrix,index,col1):
+    rows = numRows(matrix)
+    if len(col1) != rows:
+        return "ERROR: the given column and matrix do not have the same number of rows"
+    new = copyMatrix(matrix)
+    for i in range(rows):
+        new[i][index] = col1[i][0]
+    return new
