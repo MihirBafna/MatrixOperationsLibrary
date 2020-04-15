@@ -30,6 +30,7 @@ Here is the list of functions that the module currently contains:
 | cross | cross product of two vectors |
 | multiply | matrix product of two matrices |
 | elementPower | raises each element of a matrix to a specified power |
+| power | raises a given matrix to the given power (multiplying the matrix by itself n times where n is the given power) |
 | swap | swaps two specified rows of a matrix |
 | pivot | returns the indices of the first pivot position after ths given index |
 | upperTriangle | returns a tuple of the given matrix in upper triangular form and the number of row interchanges |

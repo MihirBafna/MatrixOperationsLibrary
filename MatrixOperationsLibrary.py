@@ -151,6 +151,16 @@ def elementPower(matrix, power):
             ans[i][j] = matrix[i][j]**power
     return ans
 
+def power(matrix,power):
+    rows = numRows(matrix)
+    cols = numCols(matrix)
+    ans = np.zeros(shape=(rows,cols))
+    if not isSquare(matrix):
+        return "ERROR: matrix must be square to use this function"
+    for n in range(power):
+        ans*=matrix
+    return ans
+
 def swap(matrix,row1,row2):
     ans = copyMatrix(matrix)
     ans[[row1,row2]] = ans[[row2,row1]]
@@ -390,6 +400,12 @@ def cramersSolve(A,b):
         xvector[j] = detAjb/detA
         if xvector[j] == -0: xvector[j] = 0
     return xvector
+
+
+# def dimension(matrix):
+
+
+
 #-------------------------------------------------Non-user Functions---------------------------------------------------#
 
 def copyMatrix(matrix):
