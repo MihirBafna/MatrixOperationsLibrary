@@ -156,7 +156,7 @@ def power(matrix,power):
     cols = numCols(matrix)
     ans = np.zeros(shape=(rows,cols))
     if not isSquare(matrix):
-        return "ERROR: matrix must be square to use this function"
+        return "ERROR: matrix must be square to use the power() function"
     for n in range(power):
         ans*=matrix
     return ans
@@ -192,6 +192,7 @@ def upperTriangle(matrix):
         if mat[pivoti][pivotj] < 0:
             for x in range(cols):
                 mat[pivoti][x] *= -1
+                swaps+=1
         if (n!=pivoti):
             swaps += 1
             mat = swap(mat, n, pivoti)
@@ -397,9 +398,18 @@ def cramersSolve(A,b):
         return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same\n"
     for j in range(colsA):
         detAjb = determinant(replaceCol(A,j,b))
+        print(detA,detAjb)
         xvector[j] = detAjb/detA
         if xvector[j] == -0: xvector[j] = 0
     return xvector
+
+
+# def nullSpace(matrix):
+#     rows = numRows(matrix)
+#     cols = numCols(matrix)
+#     zeros = np.zeros(shape=(rows,1))
+#     x = gaussianSolve(augment(matrix,zeros))
+#     if type(x) is str:
 
 
 # def dimension(matrix):
