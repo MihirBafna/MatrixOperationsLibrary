@@ -337,41 +337,38 @@ def gaussianSolve(A,b):
     augmentmatrix = reducedEchelon(augment(A,b))
     reducedA = np.zeros(shape=(rows,colsA))
     identitymatrix = identity(rows)
-    xvector = np.zeros(shape=(colsA,1))
     totalpivots = totalPivots(reducedA)
+    xvector = {"x"+str(n+1): [0.0]*colsA for n in range(colsA)}
+    xvector['const'] = [0.0]*colsA
     for i in range(rows):
         if augmentmatrix[i][i] == 1:
-            xvector[i][0] = augmentmatrix[i][colsA] 
+            xvector['const'][i] = augmentmatrix[i][colsA] 
         for j in range(colsA):
             reducedA[i][j] = augmentmatrix[i][j]
     for i in range(rows):
         if np.array_equal(reducedA[i],[0]*colsA) and augmentmatrix[i][colsA-1] != 0: # testing if system is INCONSISTENT
             return "The given system Ax = b is inconsistent (there are no solutions for the x vector)"
-    if np.array_equal(identitymatrix,reducedA): # testing if the system is CONSISTENT and UNIQUE
-        return xvector
     else: # the system is CONSISTENT but NOT UNIQUE (infinite solutions due to free variables)
-        freevars = {"x"+str(n+1):[0.0]*colsA for n in range(colsA)}
         def parametricVectorForm():
             key = "x"+str(j+1)
-            freevars[key][j] = 1.0
+            xvector[key][j] = 1.0
             for i in range(rows):
                 if i != j:
-                    freevars[key][i] = (-1) * \
+                    xvector[key][i] = (-1) * \
                         augmentmatrix[i][j] if augmentmatrix[i][j] != 0 else 0.0
         for j in range(colsA):
             if j >= rows:
                 parametricVectorForm()
             elif augmentmatrix[j][j] != 1:
                 parametricVectorForm()
-    xvector = transpose(xvector)[0]
-    xvectorStr = "\033[1m" + "x = " + "\033[0m" + str(xvector) if not np.array_equal(xvector, [0]*colsA) else ""
+    xvectorStr = "\033[1m" + "x = " + "\033[0m" + str(xvector['const']) if not np.array_equal(xvector, [0]*colsA) else ""
     for j in range(colsA):
         xkey = "x"+str(j+1)
-        if freevars[xkey] != [0]*colsA:
-            xvectorStr += " + "+str(freevars[xkey])+" * "+xkey
+        if xvector[xkey] != [0.0]*colsA:
+            xvectorStr += " + "+str(xvector[xkey])+" * "+xkey
         else:
-            del freevars[xkey]
-    return xvectorStr
+            del xvector[xkey]
+    return xvector
 
 
 def inverseSolve(A,b):
@@ -398,18 +395,20 @@ def cramersSolve(A,b):
         return "ERROR: b must be a column vector and the # of rows in matrix A and vector b should be the same\n"
     for j in range(colsA):
         detAjb = determinant(replaceCol(A,j,b))
-        print(detA,detAjb)
         xvector[j] = detAjb/detA
         if xvector[j] == -0: xvector[j] = 0
     return xvector
 
 
-# def nullSpace(matrix):
-#     rows = numRows(matrix)
-#     cols = numCols(matrix)
-#     zeros = np.zeros(shape=(rows,1))
-#     x = gaussianSolve(augment(matrix,zeros))
-#     if type(x) is str:
+def nullSpace(A):
+    rows = numRows(A)
+    zeros = np.zeros(shape=(rows,1))
+    return gaussianSolve(augment(A,zeros))
+
+        
+def colSpace(A):
+    rows = numRows(A)
+    colsA = numCols(A)
 
 
 # def dimension(matrix):
